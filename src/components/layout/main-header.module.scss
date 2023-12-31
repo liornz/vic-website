@@ -1,0 +1,35 @@
+@use '../../styles/variables';
+
+.header_desktop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0rem 0.5rem;
+  height: 5rem;
+  background-color: black;
+  z-index: 10;
+}
+
+.header_mobile {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.toolbar_mobile {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0rem 0.5rem;
+  height: 5rem;
+  background-color: black;
+}

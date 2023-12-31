@@ -1,0 +1,113 @@
+@use "./variables";
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  // background-color: variables.$color-sinfronteras1;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.header {
+  margin: 0;
+  padding-top: 2rem;
+  color: #505962;
+  text-align: center;
+  font-size: 1.7rem;
+}
+
+.header-underline {
+  width: 4rem;
+  height: 5px;
+  background-color: variables.$color-sinfronteras;
+  margin: 1rem auto 0rem auto;
+}
+
+.center {
+  text-align: center;
+  margin: auto auto;
+}
+
+.landing {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: table;
+  z-index: -1;
+}
+
+.home-wrap {
+  clip: rect(0, auto, auto, 0);
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.home-inner {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: transform;
+  display: table;
+}
+
+.home-inner-installations {
+  @extend .home-inner;
+  background-image: url("/images/categories/installations/installations-top.jpg");
+}
+.home-inner-sculptures {
+  @extend .home-inner;
+  background-image: url("/images/categories/sculptures/sculptures-top.jpg");
+}
+.home-inner-drawings {
+  @extend .home-inner;
+  background-image: url("/images/categories/drawings/drawings-top.jpg");
+}
+.home-inner-photography {
+  @extend .home-inner;
+  background-image: url("/images/categories/photography/photography-top.jpg");
+}
+.home-inner-video-art {
+  @extend .home-inner;
+  background-image: url("/images/categories/video-art/video-art-top.jpg");
+}
+.home-inner-fabric-and-paper {
+  @extend .home-inner;
+  background-image: url("/images/categories/fabric-and-paper/fabric-and-paper-top.jpg");
+}
+
+.caption {
+  z-index: 1;
+  position: absolute;
+  top: 38%;
+  width: 100%;
+  max-width: 100%;
+}
+
+.caption h1 {
+  @media (min-width: 600px) {
+    font-size: 4.5rem;
+    letter-spacing: 0.3rem;
+  }
+  font-size: 2rem;
+  letter-spacing: 0.2rem;
+  text-shadow: 0.2rem 0.2rem 1rem black;
+  padding-bottom: 1rem;
+  color: white;
+  text-align: center;
+}
