@@ -4,9 +4,10 @@ import { MetadataRoute } from 'next';
 type artworksPerCountry = {
   category: string;
   artworks: string[];
+  imagesPerArtwork: Record<string, string[]>;
 };
 
-const BASE_URL = 'https://victoralaluf.com/';
+const BASE_URL = 'https://victoralaluf.com';
 
 function generateSiteMap(allartworks: artworksPerCountry[]) {
   return [
@@ -74,7 +75,7 @@ function generateSiteMap(allartworks: artworksPerCountry[]) {
         } as const,
       ];
     }),
-    ...allartworks.flatMap(({ category, artworks }) => {
+    ...allartworks.flatMap(({ category, artworks, imagesPerArtwork }) => {
       return [
         {
           url: `${BASE_URL}/en/works/${category}`,
@@ -90,18 +91,22 @@ function generateSiteMap(allartworks: artworksPerCountry[]) {
         } as const,
         ...artworks.flatMap((artwork) => {
           return [
-            {
-              url: `${BASE_URL}/en/works/${category}/${artwork}`,
-              lastModified: new Date(),
-              changeFrequency: 'yearly',
-              priority: 1,
-            } as const,
-            {
-              url: `${BASE_URL}/es/works/${category}/${artwork}`,
-              lastModified: new Date(),
-              changeFrequency: 'yearly',
-              priority: 1,
-            } as const,
+            ...imagesPerArtwork[artwork]?.flatMap((image) => {
+              return [
+                {
+                  url: `${BASE_URL}/en/works/${category}/${artwork}/${image}`,
+                  lastModified: new Date(),
+                  changeFrequency: 'yearly',
+                  priority: 1,
+                } as const,
+                {
+                  url: `${BASE_URL}/es/works/${category}/${artwork}/${image}`,
+                  lastModified: new Date(),
+                  changeFrequency: 'yearly',
+                  priority: 1,
+                } as const,
+              ];
+            }),
           ];
         }),
       ];
@@ -110,7 +115,8 @@ function generateSiteMap(allartworks: artworksPerCountry[]) {
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const categories = getCategoryFileNames('en');
+  const categories = getCategoryFileNames('en').map((fileName) => fileName.replace(/\.md$/, ''));
+  console.log('categories: ', categories);
   const artworks = categories.map((category) => {
     const artworksPerCategory = getFileNamesPerCategory(category.replace(/\.md$/, ''), 'en').map((fileName) => fileName.replace(/\.md$/, ''));
     const imagesPerArtwork: Record<string, string[]> = {}
