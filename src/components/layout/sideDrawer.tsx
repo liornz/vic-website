@@ -92,7 +92,7 @@ export default function SideDrawer(props: Props) {
             </Link>
           </ListItem>
         ))}
-        <Divider />
+        {/* <Divider />
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
@@ -104,7 +104,7 @@ export default function SideDrawer(props: Props) {
               </Link>
             </Trans>
           </ListItemButton>
-        </ListItem>
+        </ListItem> */}
       </List>
     </div>
   );

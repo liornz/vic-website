@@ -1,12 +1,12 @@
-import { getCategoryFileNames, getFileNamesPerCategory } from '@/utils/data-utils';
+import { getCategoryFileNames, getFileData, getFileNamesPerCategory } from '@/utils/data-utils';
 import { MetadataRoute } from 'next';
 
 type artworksPerCountry = {
-  countryName: string;
+  category: string;
   artworks: string[];
 };
 
-const BASE_URL = 'https://sinfronteras-travelblog.com';
+const BASE_URL = 'https://victoralaluf.com/';
 
 function generateSiteMap(allartworks: artworksPerCountry[]) {
   return [
@@ -23,7 +23,7 @@ function generateSiteMap(allartworks: artworksPerCountry[]) {
       priority: 1,
     } as const,
     {
-      url: `${BASE_URL}/en/shop`,
+      url: `${BASE_URL}/en/press`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 1,
@@ -41,13 +41,13 @@ function generateSiteMap(allartworks: artworksPerCountry[]) {
       priority: 1,
     } as const,
     {
-      url: `${BASE_URL}/es/artworks`,
+      url: `${BASE_URL}/es/works`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 1,
     } as const,
     {
-      url: `${BASE_URL}/es/shop`,
+      url: `${BASE_URL}/es/press`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 1,
@@ -58,46 +58,46 @@ function generateSiteMap(allartworks: artworksPerCountry[]) {
       changeFrequency: 'monthly',
       priority: 1,
     } as const,
-    ...allartworks.flatMap(({ countryName }) => {
+    ...allartworks.flatMap(({ category }) => {
       return [
         {
-          url: `${BASE_URL}/en/artworks/${countryName}`,
+          url: `${BASE_URL}/en/works/${category}`,
           lastModified: new Date(),
           changeFrequency: 'yearly',
           priority: 1,
         } as const,
         {
-          url: `${BASE_URL}/es/artworks/${countryName}`,
+          url: `${BASE_URL}/es/works/${category}`,
           lastModified: new Date(),
           changeFrequency: 'yearly',
           priority: 1,
         } as const,
       ];
     }),
-    ...allartworks.flatMap(({ countryName, artworks }) => {
+    ...allartworks.flatMap(({ category, artworks }) => {
       return [
         {
-          url: `${BASE_URL}/en/artworks/${countryName}`,
+          url: `${BASE_URL}/en/works/${category}`,
           lastModified: new Date(),
           changeFrequency: 'yearly',
           priority: 1,
         } as const,
         {
-          url: `${BASE_URL}/es/artworks/${countryName}`,
+          url: `${BASE_URL}/es/works/${category}`,
           lastModified: new Date(),
           changeFrequency: 'yearly',
           priority: 1,
         } as const,
-        ...artworks.flatMap((destination) => {
+        ...artworks.flatMap((artwork) => {
           return [
             {
-              url: `${BASE_URL}/en/artworks/${countryName}/${destination}`,
+              url: `${BASE_URL}/en/works/${category}/${artwork}`,
               lastModified: new Date(),
               changeFrequency: 'yearly',
               priority: 1,
             } as const,
             {
-              url: `${BASE_URL}/es/artworks/${countryName}/${destination}`,
+              url: `${BASE_URL}/es/works/${category}/${artwork}`,
               lastModified: new Date(),
               changeFrequency: 'yearly',
               priority: 1,
@@ -111,10 +111,20 @@ function generateSiteMap(allartworks: artworksPerCountry[]) {
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const categories = getCategoryFileNames('en');
-  const artworks = categories.map((country) => ({
-    countryName: country.replace(/\.md$/, ''),
-    artworks: getFileNamesPerCategory(country.replace(/\.md$/, ''), 'en').map((fileName) => fileName.replace(/\.md$/, '')),
-  }));
+  const artworks = categories.map((category) => {
+    const artworksPerCategory = getFileNamesPerCategory(category.replace(/\.md$/, ''), 'en').map((fileName) => fileName.replace(/\.md$/, ''));
+    const imagesPerArtwork: Record<string, string[]> = {}
+    artworksPerCategory.forEach((artworkName) => {
+      const artworkData = getFileData(category, 'en', artworkName);
+      const imagesArray = artworkData.images.split("/");
+      imagesPerArtwork[artworkName] = imagesArray;
+    });
+    return {
+      category: category.replace(/\.md$/, ''),
+      artworks: artworksPerCategory,
+      imagesPerArtwork,
+    };
+  });
 
   // We generate the XML sitemap with the posts data
   const sitemap = generateSiteMap(artworks);

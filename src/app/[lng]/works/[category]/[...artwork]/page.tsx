@@ -48,7 +48,7 @@ const SingleDestinationPage: React.FC<Props> = async (props) => {
     (image) => image.replace(/\.jpg$|\.png$|\.jfif$/, '') === imageName
   );
 
-  return  <Artwork artwork={fileData} imageProps={imagePropsArray[imageIndex]} imageName={imageName} category={category} />;
+  return  <Artwork artwork={fileData} imageProps={imagePropsArray[imageIndex]} imageName={imageName} category={category} lng={lng} />;
 };
 
 export default SingleDestinationPage;

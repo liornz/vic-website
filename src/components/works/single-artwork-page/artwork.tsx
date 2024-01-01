@@ -10,9 +10,11 @@ import { artwork } from "../../../types/types";
 import { AiOutlineLeft } from "react-icons/ai";
 import { AiOutlineRight } from "react-icons/ai";
 import PreviewArtwork from "./preview-artwork";
+import { useTranslation } from '../../../app/i18n/client';
 
 interface Props {
   artwork: artwork;
+  lng: string;
   category: string;
   imageName: string;
   imageProps: {
@@ -25,6 +27,7 @@ interface Props {
 }
 
 const Artwork: React.FC<Props> = (props) => {
+  const { t } = useTranslation(props.lng, 'common');
   const [imagePreview, setImagePreview] = useState(false);
   const router = useRouter();
   const { artwork, imageProps, imageName, category } = props;
@@ -121,6 +124,8 @@ const Artwork: React.FC<Props> = (props) => {
       >
         {`Image ${imageIndex + 1} out of ${imagesArray.length}`}
       </p>
+      <p className={styles.mobile}>{t('swipe_image')}</p>
+      <p className={styles.mobile}>{t('click_image')}</p>
     </div>
   );
 
