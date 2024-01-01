@@ -9,10 +9,10 @@ const esCategoryDataDirectory = path.join(process.cwd(), 'data', 'es', 'categori
 export function getCategoryFileNames(locale: string) {
   let dataFiles;
   switch (locale) {
-    case 'en-US':
+    case 'en':
       dataFiles = fs.readdirSync(enCategoryDataDirectory);
       return dataFiles;
-    case 'es-AR':
+    case 'es':
       dataFiles = fs.readdirSync(esCategoryDataDirectory);
       return dataFiles;
     default:
@@ -68,7 +68,7 @@ export function buildCategoryDirectory(category: string, locale: string) {
     'works',
     category
   );
-  const directory = locale === 'en-US' ? enDataDirectory : esDataDirectory;
+  const directory = locale === 'en' ? enDataDirectory : esDataDirectory;
   return directory;
 }
 

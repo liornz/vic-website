@@ -1,7 +1,7 @@
 import { FaFacebookSquare } from 'react-icons/fa';
 import { SiInstagram } from 'react-icons/si';
 import Image from 'next/image';
-import sinFronteras from '../../../public/images/logo/_sin-fronteras.png';
+import sinFronteras from '../../../public/images/logo/sin-fronteras.png';
 import styles from './social-media.module.scss';
 
 const SocialMedia: React.FC = () => {

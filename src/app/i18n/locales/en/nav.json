@@ -1,8 +1,9 @@
 {
-  "works": "WORKS",
-  "exhibitions": "EXHIBITIONS",
-  "press": "PRESS",
+  "works": "Works",
+  "exhibitions": "Exhibitions",
+  "press": "Press",
   "shop": "SHOP",
-  "contact": "CONTACT",
+  "home": "Home",
+  "contact": "Contact",
   "lang": "ESP"
 }

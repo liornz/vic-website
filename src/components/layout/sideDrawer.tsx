@@ -15,9 +15,10 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
 import StorefrontIcon from '@mui/icons-material/Storefront';
-import PlaceIcon from '@mui/icons-material/Place';
+import ColorLensIcon from '@mui/icons-material/ColorLens';
 import ExploreIcon from '@mui/icons-material/Explore';
 import ContactMailIcon from '@mui/icons-material/ContactMail';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
 import LanguageIcon from '@mui/icons-material/Language';
 import Toolbar from '@mui/material/Toolbar';
 import Logo from './logo';
@@ -25,6 +26,7 @@ import Link from 'next/link';
 import { Trans } from 'react-i18next/TransWithoutContext';
 import { useTranslation } from '../../app/i18n/client';
 import { usePathname } from 'next/navigation';
+import { relative } from 'path';
 
 interface Props {
   children: React.ReactNode;
@@ -47,8 +49,10 @@ export default function SideDrawer(props: Props) {
     switch (text) {
       case 'Home':
         return <HomeIcon />;
-      case 'Destinations':
-        return <PlaceIcon />;
+      case 'Works':
+        return <ColorLensIcon />;
+      case 'Press':
+        return <NewspaperIcon />;
       case 'Shop':
         return <StorefrontIcon />;
       case 'Contact':
@@ -63,7 +67,7 @@ export default function SideDrawer(props: Props) {
       <Toolbar />
       <Divider />
       <List>
-        {['Home', 'Works', 'Contact'].map((text) => (
+        {['Home', 'Works', 'Press', 'Contact'].map((text) => (
           <ListItem key={text} disablePadding>
             <Link href={text === 'Home' ? '/' : `/${text.toLowerCase()}`}>
               <ListItemButton>
@@ -156,7 +160,7 @@ export default function SideDrawer(props: Props) {
           {drawer}
         </Drawer>
       </Box>
-      <Box component="main" sx={{ flexGrow: 1, p: 3, pt: 7, width: { md: `calc(100% - ${drawerWidth}px)` } }}>
+      <Box component="main" sx={{ position: 'relative', flexGrow: 1, p: 3, pt: 10, width: { md: `calc(100% - ${drawerWidth}px)` } }}>
         {children}
       </Box>
     </Box>

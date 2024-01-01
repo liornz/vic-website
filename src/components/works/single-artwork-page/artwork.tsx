@@ -126,9 +126,6 @@ const Artwork: React.FC<Props> = (props) => {
 
   return (
     <>
-      <Link href={`/works/${category}`} className={styles.category}>
-        {`View All ${artwork.category}`}
-      </Link>
       <h1 className={styles.title}>{artwork.title}</h1>
       <div className={styles.main}>
         {artworkData}

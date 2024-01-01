@@ -1,8 +1,6 @@
 import { getCategoryFileNames, getFileData, getFileNamesPerCategory } from '../../../../../utils/data-utils';
 import React from 'react';
 import { getPlaiceholder } from 'plaiceholder';
-
-import { artwork } from '../../../../../types/types';
 import { Metadata } from 'next';
 import Artwork from '@/components/works/single-artwork-page/artwork';
 import path from "node:path";
