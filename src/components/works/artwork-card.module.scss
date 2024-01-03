@@ -58,6 +58,19 @@
   &:hover {
     transform: scale(0.97);
   }
+  animation: appear linear forwards;
+  animation-timeline: view();
+  animation-range-start: cover;
+  animation-range-end: contain 15vh;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .image {
