@@ -14,7 +14,6 @@ const Footer: React.FC<FooterProps> = ({ lng, drawerWidth }) => {
     <Box
       sx={{
         flexGrow: 1,
-        p: 3,
         pt: 7,
         width: { sm: `calc(100% - ${drawerWidth}px)` },
         ml: { sm: `${drawerWidth}px` },
