@@ -125,7 +125,7 @@ const Artwork: React.FC<Props> = (props) => {
         {`Image ${imageIndex + 1} out of ${imagesArray.length}`}
       </p>
       <p className={styles.mobile}>{t('swipe_image')}</p>
-      <p className={styles.mobile}>{t('click_image')}</p>
+      {/* <p className={styles.mobile}>{t('click_image')}</p> */}
     </div>
   );
 
@@ -147,7 +147,7 @@ const Artwork: React.FC<Props> = (props) => {
 
           <div
             className={styles.image_container}
-            onClick={openPreviewHandler}
+            // onClick={openPreviewHandler}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
           >

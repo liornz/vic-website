@@ -44,9 +44,9 @@
   margin: auto;
   flex: 90%;
   background-color: rgb(205, 205, 205);
-  &:hover {
-    cursor: zoom-in;
-  }
+  // &:hover {
+  //   cursor: zoom-in;
+  // }
   @media (min-width: 800px) {
     height: 75vh;
   }
