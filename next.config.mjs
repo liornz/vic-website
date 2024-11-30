@@ -14,11 +14,14 @@ const withPWA = pwa({
  * @type {import('next').NextConfig}
  */
 const config = {
-  images: {},
+  images: {
+    formats: ['image/avif', 'image/webp'],
+  },
   webpack: (config, { isServer }) => {
     if (isServer) {
       config.externals = [...(config.externals || []), 'sharp'];
     }
+
     return config;
   },
   // Your Next.js config.
