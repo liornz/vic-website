@@ -1,8 +1,7 @@
+import getPlaiceholder from '@plaiceholder/next';
 import { Metadata } from 'next';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { getPlaiceholder } from 'plaiceholder';
-import React from 'react';
 import AllCategories from '../../../components/works/categories/all-categories';
 import { getAllCategoriesData } from '../../../utils/data-utils';
 
@@ -15,7 +14,7 @@ export const metadata: Metadata = {
   description: 'Destinations - Sinfronteras Travel Blog - Choose country',
 };
 
-const AllCategoriesPage: React.FC<Props> = async ({ params }) => {
+const AllCategoriesPage = async ({ params }: Props) => {
   const { lng } = await params;
   const categories = getAllCategoriesData(lng);
   const imagePropsArray = await Promise.all(

@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const ImageViewer: React.FC<Props> = async ({ params }) => {
+const ImageViewer = async ({ params }: Props) => {
   const { pic: filename } = await params;
 
   if (filename.startsWith('external-')) {

@@ -1,8 +1,8 @@
 import Artwork from '@/components/works/single-artwork-page/artwork';
+import getPlaiceholder from '@plaiceholder/next';
 import { Metadata } from 'next';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { getPlaiceholder } from 'plaiceholder';
 import { getCategoryFileNames, getFileData, getFileNamesPerCategory } from '../../../../../utils/data-utils';
 
 interface Props {

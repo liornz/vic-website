@@ -1,7 +1,7 @@
+import getPlaiceholder from '@plaiceholder/next';
 import { Metadata } from 'next';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { getPlaiceholder } from 'plaiceholder';
 import ArtworksPerCagegory from '../../../../components/works/artworks-per-category';
 import { getArtworksPerCategory, getCategoryFileData, getCategoryFileNames } from '../../../../utils/data-utils';
 
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const ArtworksPerCategory: React.FC<Props> = async ({ params }) => {
+const ArtworksPerCategory = async ({ params }: Props) => {
   const { lng, category } = await params;
   const categoryData = getCategoryFileData(category, lng);
   const artworks = getArtworksPerCategory(category, lng);
