@@ -16,8 +16,6 @@ const withPWA = pwa({
 const config = {
   images: {
     formats: ['image/avif', 'image/webp'],
-    dangerouslyAllowSVG: true,
-    contentDispositionType: 'attachment',
     remotePatterns: [
       {
         protocol: 'https',
@@ -25,17 +23,6 @@ const config = {
       },
     ],
   },
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        sharp: false,
-      };
-    }
-
-    return config;
-  },
-  // Your Next.js config.
 };
 
 export default withPWA(withPlaiceholder(config));
