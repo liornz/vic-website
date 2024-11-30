@@ -3,7 +3,6 @@ import { Metadata } from 'next';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { getPlaiceholder } from 'plaiceholder';
-import React from 'react';
 import { getCategoryFileNames, getFileData, getFileNamesPerCategory } from '../../../../../utils/data-utils';
 
 interface Props {
@@ -20,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const SingleDestinationPage: React.FC<Props> = async ({ params }) => {
+const SingleDestinationPage = async ({ params }: Props) => {
   const { lng, category, artwork } = await params;
 
   const [artworkIdentifier, imageName] = artwork;
