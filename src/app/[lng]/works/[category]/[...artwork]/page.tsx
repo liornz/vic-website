@@ -1,17 +1,17 @@
-import { getCategoryFileNames, getFileData, getFileNamesPerCategory } from '../../../../../utils/data-utils';
-import React from 'react';
-import { getPlaiceholder } from 'plaiceholder';
-import { Metadata } from 'next';
 import Artwork from '@/components/works/single-artwork-page/artwork';
-import path from "node:path";
-import fs from "node:fs/promises";
+import { Metadata } from 'next';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { getPlaiceholder } from 'plaiceholder';
+import React from 'react';
+import { getCategoryFileNames, getFileData, getFileNamesPerCategory } from '../../../../../utils/data-utils';
 
 interface Props {
-  params: { lng: string; category: string; artwork: [string, string] };
+  params: Promise<{ lng: string; category: string; artwork: [string, string] }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { category, artwork, lng } = params;
+  const { category, artwork, lng } = await params;
   const fileData = getFileData(category, lng, artwork[0]);
 
   return {
@@ -20,10 +20,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const SingleDestinationPage: React.FC<Props> = async (props) => {
-  const {
-    params: { lng, category, artwork },
-  } = props;
+const SingleDestinationPage: React.FC<Props> = async ({ params }) => {
+  const { lng, category, artwork } = await params;
 
   const [artworkIdentifier, imageName] = artwork;
 
@@ -33,7 +31,7 @@ const SingleDestinationPage: React.FC<Props> = async (props) => {
   const imagePropsArray = await Promise.all(
     imagesArray.map(async (image) => {
       const imagePath = `/images/works/${category}/${artwork[0]}/${image}`;
-      const file = await fs.readFile(path.join("./public", imagePath));
+      const file = await fs.readFile(path.join('./public', imagePath));
       const { base64, metadata } = await getPlaiceholder(file);
       return {
         width: metadata.width,
@@ -44,11 +42,9 @@ const SingleDestinationPage: React.FC<Props> = async (props) => {
     })
   ).then((values) => values);
 
-  const imageIndex = imagesArray.findIndex(
-    (image) => image.replace(/\.jpg$|\.png$|\.jfif$/, '') === imageName
-  );
+  const imageIndex = imagesArray.findIndex((image) => image.replace(/\.jpg$|\.png$|\.jfif$/, '') === imageName);
 
-  return  <Artwork artwork={fileData} imageProps={imagePropsArray[imageIndex]} imageName={imageName} category={category} lng={lng} />;
+  return <Artwork artwork={fileData} imageProps={imagePropsArray[imageIndex]} imageName={imageName} category={category} lng={lng} />;
 };
 
 export default SingleDestinationPage;
@@ -60,19 +56,13 @@ export async function generateStaticParams() {
     lng: string;
   }[] = [];
   const categoryFileNames = getCategoryFileNames('en');
-  const categoryFileSlugs = categoryFileNames.map((FileName) =>
-    FileName.replace(/\.md$/, '')
-  );
+  const categoryFileSlugs = categoryFileNames.map((FileName) => FileName.replace(/\.md$/, ''));
   for (const category of categoryFileSlugs) {
     const fileNames = getFileNamesPerCategory(category, 'en');
-    const fileSlugs = fileNames.map((fileName) =>
-      fileName.replace(/\.md$/, '')
-    );
+    const fileSlugs = fileNames.map((fileName) => fileName.replace(/\.md$/, ''));
     for (const file of fileSlugs) {
       const fileData = getFileData(category, 'en', file);
-      const imageNamesArray = fileData.images
-        .split('/')
-        .map((imageName) => imageName.replace(/\.jpg$|\.png$|\.jfif$/, ''));
+      const imageNamesArray = fileData.images.split('/').map((imageName) => imageName.replace(/\.jpg$|\.png$|\.jfif$/, ''));
 
       const pathsEn = imageNamesArray.map((imageName) => ({ category, artwork: [file, imageName], lng: 'en' }));
 

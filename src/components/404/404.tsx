@@ -1,15 +1,16 @@
-import Link from 'next/link';
-import styles from './404.module.scss';
-import { useTranslation } from '../../app/i18n';
+'use client';
 
+import Link from 'next/link';
+import { useTranslation } from '../../app/i18n/client';
+import styles from './404.module.scss';
 
 interface Props {
   lng: string;
 }
 
-const Error404: React.FC<Props> = async (props) => {
+const Error404: React.FC<Props> = (props) => {
   const { lng } = props;
-  const { t } = await useTranslation(lng, 'error');
+  const { t } = useTranslation(lng, 'error');
   return (
     <div className={styles.section}>
       <h1 className={styles.title}>{t('title')}</h1>

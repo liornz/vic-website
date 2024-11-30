@@ -1,7 +1,9 @@
-import CategoriesGrid from './categories-grid';
-import styles from './all-categories.module.scss';
+'use client';
+
+import { useTranslation } from '../../../app/i18n/client';
 import { category } from '../../../types/types';
-import { useTranslation } from '../../../app/i18n';
+import styles from './all-categories.module.scss';
+import CategoriesGrid from './categories-grid';
 
 interface Props {
   categories: category[];
@@ -16,16 +18,14 @@ interface Props {
   }[];
 }
 
-const AllCategories: React.FC<Props> = async (props) => {
+const AllCategories: React.FC<Props> = (props) => {
   const { categories, images, lng } = props;
-  const { t } = await useTranslation(lng, 'common');
+  const { t } = useTranslation(lng, 'common');
 
   return (
     <div>
       <div className={styles.container}>
-        <h1 className="header">
-          {t('select')}
-        </h1>
+        <h1 className="header">{t('select')}</h1>
         <div className="header-underline"></div>
         <div className={styles.divider}></div>
       </div>

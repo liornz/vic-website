@@ -1,16 +1,16 @@
-import ArtworksPerCagegory from '../../../../components/works/artworks-per-category';
-import { getCategoryFileData, getCategoryFileNames, getArtworksPerCategory } from '../../../../utils/data-utils';
 import { Metadata } from 'next';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import { getPlaiceholder } from 'plaiceholder';
-import path from "node:path";
-import fs from "node:fs/promises";
+import ArtworksPerCagegory from '../../../../components/works/artworks-per-category';
+import { getArtworksPerCategory, getCategoryFileData, getCategoryFileNames } from '../../../../utils/data-utils';
 
 interface Props {
-  params: { lng: string; category: string };
+  params: Promise<{ lng: string; category: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { category, lng } = params;
+  const { category, lng } = await params;
   const categoryData = getCategoryFileData(category, lng);
 
   return {
@@ -19,14 +19,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const ArtworksPerCategory: React.FC<Props> = async ({ params: { lng, category } }) => {
+const ArtworksPerCategory: React.FC<Props> = async ({ params }) => {
+  const { lng, category } = await params;
   const categoryData = getCategoryFileData(category, lng);
   const artworks = getArtworksPerCategory(category, lng);
 
   const imagePropsArray = await Promise.all(
     artworks.map(async (artwork) => {
       const imagePath = `/images/works/${artwork.categorySlug}/${artwork.slug}/${artwork.mainImage}`;
-      const file = await fs.readFile(path.join("./public", imagePath));
+      const file = await fs.readFile(path.join('./public', imagePath));
       const { base64, metadata } = await getPlaiceholder(file);
       return {
         src: imagePath,
@@ -37,7 +38,7 @@ const ArtworksPerCategory: React.FC<Props> = async ({ params: { lng, category } 
     })
   ).then((values) => values);
 
-  return <ArtworksPerCagegory category={categoryData} artworks={artworks} imagePropsArray={imagePropsArray}  />;
+  return <ArtworksPerCagegory category={categoryData} artworks={artworks} imagePropsArray={imagePropsArray} />;
 };
 
 export default ArtworksPerCategory;

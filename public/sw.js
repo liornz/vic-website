@@ -67,7 +67,7 @@ if (!self.define) {
     });
   };
 }
-define(['./workbox-fd7231d4'], (function (workbox) { 'use strict';
+define(['./workbox-a3544fce'], (function (workbox) { 'use strict';
 
   importScripts();
   self.skipWaiting();
@@ -78,4 +78,3 @@ define(['./workbox-fd7231d4'], (function (workbox) { 'use strict';
   }), 'GET');
 
 }));
-//# sourceMappingURL=sw.js.map

@@ -1,26 +1,25 @@
-import './globals.css';
+import SideDrawer from '@/components/layout/sideDrawer';
+import { dir } from 'i18next';
 import type { Metadata, Viewport } from 'next';
 import { Lato } from 'next/font/google';
-import { dir } from 'i18next';
 import { languages } from '../i18n/settings';
+import './globals.css';
 
 export async function generateStaticParams() {
   return languages.map((lng) => ({ lng }));
 }
 
-import '../../../styles/globals.scss';
 import Footer from '@/components/footer/footer';
+import { getAllCategoriesData } from '@/utils/data-utils';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import SideDrawer from '@/components/layout/sideDrawer';
-import { getAllCategoriesData } from '@/utils/data-utils';
+import '../../../styles/globals.scss';
 
 const lato = Lato({ subsets: ['latin'], weight: ['400', '700'] });
 
 export const metadata: Metadata = {
   title: 'Victor Alaluf - Artist Portfolio',
-  description:
-  'Artwork Portfolio of Victor Alaluf - A Conceptual Artist in the flieds of Installation, Sculpture and Drawing',
+  description: 'Artwork Portfolio of Victor Alaluf - A Conceptual Artist in the flieds of Installation, Sculpture and Drawing',
   verification: {
     google: 'g9rOuYhxp85PFoEn6Ib1IRk6ogMouW5ZlU5tk-djwhE',
   },
@@ -37,16 +36,17 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: 'cover',
   maximumScale: 1,
-}
+};
 
 type RootLayoutProps = {
   children: React.ReactNode;
-  params: { lng: string };
+  params: Promise<{ lng: string }>;
 };
 
 const drawerWidth = 240;
 
-export default function RootLayout({ children, params: { lng } }: RootLayoutProps) {
+export default async function RootLayout({ children, params }: RootLayoutProps) {
+  const { lng } = await params;
   const categories = getAllCategoriesData(lng);
   const categoriesData = categories.map((category) => ({ name: category.name, slug: category.slug }));
   return (
