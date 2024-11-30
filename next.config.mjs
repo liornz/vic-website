@@ -14,15 +14,7 @@ const withPWA = pwa({
  * @type {import('next').NextConfig}
  */
 const config = {
-  images: {
-    formats: ['image/avif', 'image/webp'],
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-    ],
-  },
+  // Your Next.js config.
 };
 
 export default withPWA(withPlaiceholder(config));
