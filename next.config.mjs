@@ -16,10 +16,21 @@ const withPWA = pwa({
 const config = {
   images: {
     formats: ['image/avif', 'image/webp'],
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
   },
   webpack: (config, { isServer }) => {
-    if (isServer) {
-      config.externals = [...(config.externals || []), 'sharp'];
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        sharp: false,
+      };
     }
 
     return config;
