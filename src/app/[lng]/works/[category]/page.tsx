@@ -1,7 +1,7 @@
-import getPlaiceholder from '@plaiceholder/next';
 import { Metadata } from 'next';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { getPlaiceholder } from 'plaiceholder';
 import ArtworksPerCagegory from '../../../../components/works/artworks-per-category';
 import { getArtworksPerCategory, getCategoryFileData, getCategoryFileNames } from '../../../../utils/data-utils';
 

@@ -1,7 +1,7 @@
-import getPlaiceholder from '@plaiceholder/next';
 import { Metadata } from 'next';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { getPlaiceholder } from 'plaiceholder';
 import AllCategories from '../../../components/works/categories/all-categories';
 import { getAllCategoriesData } from '../../../utils/data-utils';
 
