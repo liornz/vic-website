@@ -14,6 +14,16 @@ const withPWA = pwa({
  * @type {import('next').NextConfig}
  */
 const config = {
+  // Add sharp configuration
+  images: {
+    disableStaticImages: true,
+  },
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.externals = [...(config.externals || []), 'sharp'];
+    }
+    return config;
+  },
   // Your Next.js config.
 };
 
