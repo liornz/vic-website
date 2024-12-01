@@ -18,3 +18,4 @@ const config = {
 };
 
 export default withPWA(withPlaiceholder(config));
+// for commit
