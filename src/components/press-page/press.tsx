@@ -12,7 +12,7 @@ const Press: React.FC<Props> = (props) => {
         <h3>Vanitas, Bernheimer Contemporary. München, Septenber 2014:</h3>
         <ul>
           <li>
-            <Link href={`/press/${convertUrl('external-www.muenchenarchitektur.com/beitrag/22099-vanitas')}`}>
+            <Link href={{ pathname: '/press/article', query: { name: 'test' } }}>
               <p>München Architektur Online Magazin - Sept. 2014</p>
             </Link>
           </li>
@@ -28,9 +28,7 @@ const Press: React.FC<Props> = (props) => {
           </li>
           <li>
             <Link
-              href={`/press/${convertUrl(
-                'external-www.faz.net/aktuell/feuilleton/kunst-und-architektur/open-art-2014-zieht-die-art-basel-nach-muenchen-13150324-p2.html'
-              )}`}
+              href={'/press/article?url=www.faz.net/aktuell/feuilleton/kunst-und-architektur/open-art-2014-zieht-die-art-basel-nach-muenchen-13150324-p2.html'}
             >
               <p>Frankfurter Allgemeine Zeitung - 12, Sept. 2014</p>
             </Link>
@@ -54,7 +52,7 @@ const Press: React.FC<Props> = (props) => {
             </a>
           </li>
           <li>
-            <Link href={`/press/${convertUrl('external-www.mucbook.de/knochen-gold-und-ein-brot-aus-beton/')}`}>
+            <Link href={'/press/?url=www.mucbook.de/knochen-gold-und-ein-brot-aus-beton/'}>
               <p>MUCBOOK - 15, Sept. 2014</p>
             </Link>
           </li>
@@ -65,7 +63,7 @@ const Press: React.FC<Props> = (props) => {
           </li>
           <li>
             <Link
-              href={`/press/${convertUrl('external-www.exklusiv-muenchen.de/news/isabel-bernheimer-interview-29173')}`}
+              href={'/press/?url=www.exklusiv-muenchen.de/news/isabel-bernheimer-interview-29173'}
             >
               <p>Exklusiv München - 13, Dec. 2014</p>
             </Link>
@@ -82,7 +80,7 @@ const Press: React.FC<Props> = (props) => {
           </li>
           <li>
             <Link 
-            href={`/press/${convertUrl('external-www.exberliner.com/whats-on/art/who-cares-exhibition/')}`}
+            href={'/press/?url=www.exberliner.com/whats-on/art/who-cares-exhibition/'}
             >
               <p>EXBERLINER - July, 2015</p>
             </Link>
@@ -110,14 +108,14 @@ const Press: React.FC<Props> = (props) => {
         <ul>
           <li>
             <Link
-              href={`/press/${convertUrl('external-watchfineartslondon.wordpress.com/2014/09/14/berlinese-still-lifes-in-munich/#more-1815')}`}
+              href={'/press/?url=watchfineartslondon.wordpress.com/2014/09/14/berlinese-still-lifes-in-munich/#more-1815'}
             >
               <p>Watch Fine Arts London - 14, Sept. 2014</p>
             </Link>
           </li>
           <li>
             <Link 
-            href={`/press/${convertUrl('external-www.fluctibus.com/central/2014/09/11/vanitas/')}`}
+            href={'/press/?url=www.fluctibus.com/central/2014/09/11/vanitas/'}
             >
               <p>The fluctibus magazine - 11, Sept. 2014</p>
             </Link>
@@ -139,7 +137,7 @@ const Press: React.FC<Props> = (props) => {
         <ul>
           <li>
             <Link 
-            href={`/press/${convertUrl('external-mystylery.com/en/blog/2015/07/23/isabel-bernheimers-exhibition-who-cares/')}`}
+            href={'/press/?url=mystylery.com/en/blog/2015/07/23/isabel-bernheimers-exhibition-who-cares/'}
             >
               <p>My Mistery - 23, July, 2015</p>
             </Link>
@@ -172,7 +170,7 @@ const Press: React.FC<Props> = (props) => {
           </li>
           <li>
             <Link
-            href={`/press/${convertUrl('external-www.primeraedicion.com.ar/nota/105216/mi-muestra-habla-de-esa-oscuridad-en-la-que-nos-podemos-encontrar/')}`}
+            href={'/press/?url=www.primeraedicion.com.ar/nota/105216/mi-muestra-habla-de-esa-oscuridad-en-la-que-nos-podemos-encontrar/'}
             >
               <p>Primera Edicíon - 14, March 2013</p>
             </Link>

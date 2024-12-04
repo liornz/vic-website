@@ -1,6 +1,7 @@
-import withPlaiceholder from "@plaiceholder/next";
-import runtimeCaching from './cache.js';
+// @ts-check
+import withPlaiceholder from '@plaiceholder/next';
 import pwa from 'next-pwa';
+import runtimeCaching from './cache.js';
 
 const withPWA = pwa({
   dest: 'public',
@@ -8,12 +9,13 @@ const withPWA = pwa({
   dynamicStartUrl: false,
   buildExcludes: [/middleware-manifest.json$/],
 });
- 
+
 /**
  * @type {import('next').NextConfig}
  */
 const config = {
   // Your Next.js config.
 };
- 
+
 export default withPWA(withPlaiceholder(config));
+// for commit
