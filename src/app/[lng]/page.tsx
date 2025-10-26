@@ -1,7 +1,8 @@
 import Hero from '@/components/home-page/hero';
 import VideoOpening from '@/components/home-page/video-opening';
 
-export default function Page({ params: { lng } }: { params: { lng: string } }) {
+export default async function Page({ params }: { params: Promise<{ lng: string }> }) {
+  const { lng } = await params;
 
   return (
     <>

@@ -3,7 +3,7 @@ import Contact from '../../../components/contact-page/contact';
 import { Metadata } from 'next';
 
 interface Props {
-  params: { lng: string };
+  params: Promise<{ lng: string }>;
 }
 
 export const metadata: Metadata = {
@@ -11,10 +11,8 @@ export const metadata: Metadata = {
   description: 'Contact Page - Victor Alaluf Art - Contact me!',
 };
 
-const ContactPage: React.FC<Props> = (props) => {
-  const {
-    params: { lng },
-  } = props;
+const ContactPage: React.FC<Props> = async (props) => {
+  const { lng } = await props.params;
   return <Contact lng={lng} />;
 };
 

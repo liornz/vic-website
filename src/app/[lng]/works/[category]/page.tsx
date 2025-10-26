@@ -6,11 +6,11 @@ import path from "node:path";
 import fs from "node:fs/promises";
 
 interface Props {
-  params: { lng: string; category: string };
+  params: Promise<{ lng: string; category: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { category, lng } = params;
+  const { category, lng } = await params;
   const categoryData = getCategoryFileData(category, lng);
 
   return {
@@ -19,7 +19,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const ArtworksPerCategory: React.FC<Props> = async ({ params: { lng, category } }) => {
+const ArtworksPerCategory: React.FC<Props> = async ({ params }) => {
+  const { lng, category } = await params;
   const categoryData = getCategoryFileData(category, lng);
   const artworks = getArtworksPerCategory(category, lng);
 

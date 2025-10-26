@@ -41,12 +41,13 @@ export const viewport: Viewport = {
 
 type RootLayoutProps = {
   children: React.ReactNode;
-  params: { lng: string };
+  params: Promise<{ lng: string }>;
 };
 
 const drawerWidth = 240;
 
-export default function RootLayout({ children, params: { lng } }: RootLayoutProps) {
+export default async function RootLayout({ children, params }: RootLayoutProps) {
+  const { lng } = await params;
   const categories = getAllCategoriesData(lng);
   const categoriesData = categories.map((category) => ({ name: category.name, slug: category.slug }));
   return (

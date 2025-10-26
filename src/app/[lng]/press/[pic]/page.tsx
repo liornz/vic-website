@@ -3,11 +3,11 @@ import { Metadata } from "next";
 import Image from "next/image";
 
 interface Props {
-	params: { lng: string; pic: string };
+	params: Promise<{ lng: string; pic: string }>;
   }
 
   export async function generateMetadata({ params }: Props): Promise<Metadata> {
-	const { pic: filename } = params;
+	const { pic: filename } = await params;
   
 	return {
 	  title: `Victor Alaluf Art - Press Article - ${filename}`,
@@ -15,8 +15,8 @@ interface Props {
 	};
   }
 
-const ImageViewer: React.FC<Props> = ({ params }) => {
-	const { pic: filename } = params;
+const ImageViewer: React.FC<Props> = async ({ params }) => {
+	const { pic: filename } = await params;
 
 	if (filename.startsWith('external-')) {
 		const reconstructedUrl = reconstructUrl(filename.replace('external-', ''));

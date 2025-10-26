@@ -7,11 +7,11 @@ import path from "node:path";
 import fs from "node:fs/promises";
 
 interface Props {
-  params: { lng: string; category: string; artwork: [string, string] };
+  params: Promise<{ lng: string; category: string; artwork: [string, string] }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { category, artwork, lng } = params;
+  const { category, artwork, lng } = await params;
   const fileData = getFileData(category, lng, artwork[0]);
 
   return {
@@ -21,9 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 const SingleDestinationPage: React.FC<Props> = async (props) => {
-  const {
-    params: { lng, category, artwork },
-  } = props;
+  const { lng, category, artwork } = await props.params;
 
   const [artworkIdentifier, imageName] = artwork;
 

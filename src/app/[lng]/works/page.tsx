@@ -8,7 +8,7 @@ import path from "node:path";
 import fs from "node:fs/promises";
 
 interface Props {
-  params: { lng: string };
+  params: Promise<{ lng: string }>;
 }
 
 export const metadata: Metadata = {
@@ -16,7 +16,8 @@ export const metadata: Metadata = {
   description: 'Destinations - Sinfronteras Travel Blog - Choose country',
 };
 
-const AllCategoriesPage: React.FC<Props> = async ({ params: { lng } }) => {
+const AllCategoriesPage: React.FC<Props> = async ({ params }) => {
+  const { lng } = await params;
   const categories = getAllCategoriesData(lng);
   const imagePropsArray = await Promise.all(
     categories.map(async (category) => {
