@@ -14,7 +14,7 @@ const withPWA = pwa({
  */
 const config = {
   // Your Next.js config.
-  // Use webpack for PWA compatibility
+  // Force webpack for PWA compatibility
   webpack: (config, { isServer }) => {
     return config;
   },
