@@ -176,9 +176,11 @@ const Artwork: React.FC<Props> = (props) => {
           </Link>
         </div>
       </div>
-      <ReactMarkdown className={styles.details}>
-        {artwork.content}
-      </ReactMarkdown>
+      <div className={styles.details}>
+        <ReactMarkdown>
+          {artwork.content}
+        </ReactMarkdown>
+      </div>
       {imagePreview ? (
         <PreviewArtwork
           imageProps={imageProps}
