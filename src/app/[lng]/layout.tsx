@@ -14,6 +14,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SideDrawer from '@/components/layout/sideDrawer';
 import { getAllCategoriesData } from '@/utils/data-utils';
+import CookiesProviderWrapper from '@/components/providers/cookies-provider';
 
 const lato = Lato({ subsets: ['latin'], weight: ['400', '700'] });
 
@@ -53,11 +54,13 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
   return (
     <html lang={lng} dir={dir(lng)}>
       <body className={lato.className}>
-        <SideDrawer lng={lng} categoriesData={categoriesData} drawerWidth={drawerWidth}>
-          {children}
-        </SideDrawer>
-        <Footer drawerWidth={drawerWidth} lng={lng} />
-        <ToastContainer />
+        <CookiesProviderWrapper>
+          <SideDrawer lng={lng} categoriesData={categoriesData} drawerWidth={drawerWidth}>
+            {children}
+          </SideDrawer>
+          <Footer drawerWidth={drawerWidth} lng={lng} />
+          <ToastContainer />
+        </CookiesProviderWrapper>
       </body>
     </html>
   );
