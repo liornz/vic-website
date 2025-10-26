@@ -9,6 +9,7 @@ interface Props {
 
 const Error404: React.FC<Props> = async (props) => {
   const { lng } = props;
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { t } = await useTranslation(lng, 'error');
   return (
     <div className={styles.section}>

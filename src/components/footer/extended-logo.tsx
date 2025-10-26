@@ -6,6 +6,7 @@ type ExtendedLogoProps = {
 };
 
 const ExtendedLogo: React.FC<ExtendedLogoProps> = async ({ lng }) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { t } = await useTranslation(lng, 'footer');
 
   return (

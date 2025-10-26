@@ -18,6 +18,7 @@ interface Props {
 
 const AllCategories: React.FC<Props> = async (props) => {
   const { categories, images, lng } = props;
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { t } = await useTranslation(lng, 'common');
 
   return (
