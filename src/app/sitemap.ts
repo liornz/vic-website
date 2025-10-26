@@ -115,24 +115,61 @@ function generateSiteMap(allartworks: artworksPerCountry[]) {
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const categories = getCategoryFileNames('en').map((fileName) => fileName.replace(/\.md$/, ''));
-  console.log('categories: ', categories);
-  const artworks = categories.map((category) => {
-    const artworksPerCategory = getFileNamesPerCategory(category.replace(/\.md$/, ''), 'en').map((fileName) => fileName.replace(/\.md$/, ''));
-    const imagesPerArtwork: Record<string, string[]> = {}
-    artworksPerCategory.forEach((artworkName) => {
-      const artworkData = getFileData(category, 'en', artworkName);
-      const imagesArray = artworkData.images.split("/");
-      imagesPerArtwork[artworkName] = imagesArray;
+  try {
+    const categories = getCategoryFileNames('en').map((fileName) => fileName.replace(/\.md$/, ''));
+    console.log('categories: ', categories);
+    
+    const artworks = categories.map((category) => {
+      try {
+        const artworksPerCategory = getFileNamesPerCategory(category.replace(/\.md$/, ''), 'en').map((fileName) => fileName.replace(/\.md$/, ''));
+        const imagesPerArtwork: Record<string, string[]> = {}
+        
+        artworksPerCategory.forEach((artworkName) => {
+          try {
+            const artworkData = getFileData(category, 'en', artworkName);
+            if (artworkData.images) {
+              const imagesArray = artworkData.images.split("/").filter(img => img.trim());
+              imagesPerArtwork[artworkName] = imagesArray;
+            }
+          } catch (error) {
+            console.warn(`Error processing artwork ${artworkName} in category ${category}:`, error);
+          }
+        });
+        
+        return {
+          category: category.replace(/\.md$/, ''),
+          artworks: artworksPerCategory,
+          imagesPerArtwork,
+        };
+      } catch (error) {
+        console.warn(`Error processing category ${category}:`, error);
+        return {
+          category: category.replace(/\.md$/, ''),
+          artworks: [],
+          imagesPerArtwork: {},
+        };
+      }
     });
-    return {
-      category: category.replace(/\.md$/, ''),
-      artworks: artworksPerCategory,
-      imagesPerArtwork,
-    };
-  });
 
-  // We generate the XML sitemap with the posts data
-  const sitemap = generateSiteMap(artworks);
-  return sitemap;
+    // We generate the XML sitemap with the posts data
+    const sitemap = generateSiteMap(artworks);
+    return sitemap;
+  } catch (error) {
+    console.error('Error generating sitemap:', error);
+    // Return a basic sitemap if there's an error
+    return [
+      {
+        url: 'https://victoralaluf.com/en',
+        lastModified: new Date(),
+        changeFrequency: 'yearly',
+        priority: 1,
+      },
+      {
+        url: 'https://victoralaluf.com/es',
+        lastModified: new Date(),
+        changeFrequency: 'yearly',
+        priority: 1,
+      },
+    ];
+  }
 }

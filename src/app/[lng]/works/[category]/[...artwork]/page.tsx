@@ -54,32 +54,58 @@ const SingleDestinationPage: React.FC<Props> = async (props) => {
 export default SingleDestinationPage;
 
 export async function generateStaticParams() {
-  let pathsArray: {
-    category: string;
-    artwork: string[];
-    lng: string;
-  }[] = [];
-  const categoryFileNames = getCategoryFileNames('en');
-  const categoryFileSlugs = categoryFileNames.map((FileName) =>
-    FileName.replace(/\.md$/, '')
-  );
-  for (const category of categoryFileSlugs) {
-    const fileNames = getFileNamesPerCategory(category, 'en');
-    const fileSlugs = fileNames.map((fileName) =>
-      fileName.replace(/\.md$/, '')
+  try {
+    const pathsArray: {
+      category: string;
+      artwork: string[];
+      lng: string;
+    }[] = [];
+    
+    const categoryFileNames = getCategoryFileNames('en');
+    const categoryFileSlugs = categoryFileNames.map((FileName) =>
+      FileName.replace(/\.md$/, '')
     );
-    for (const file of fileSlugs) {
-      const fileData = getFileData(category, 'en', file);
-      const imageNamesArray = fileData.images
-        .split('/')
-        .map((imageName) => imageName.replace(/\.jpg$|\.png$|\.jfif$/, ''));
+    
+    for (const category of categoryFileSlugs) {
+      const fileNames = getFileNamesPerCategory(category, 'en');
+      const fileSlugs = fileNames.map((fileName) =>
+        fileName.replace(/\.md$/, '')
+      );
+      
+      for (const file of fileSlugs) {
+        try {
+          const fileData = getFileData(category, 'en', file);
+          if (fileData.images) {
+            const imageNamesArray = fileData.images
+              .split('/')
+              .filter(img => img.trim()) // Filter out empty strings
+              .map((imageName) => imageName.replace(/\.jpg$|\.png$|\.jfif$/, ''));
 
-      const pathsEn = imageNamesArray.map((imageName) => ({ category, artwork: [file, imageName], lng: 'en' }));
+            // Create paths for both languages
+            const pathsEn = imageNamesArray.map((imageName) => ({ 
+              category, 
+              artwork: [file, imageName], 
+              lng: 'en' 
+            }));
 
-      const pathsEs = imageNamesArray.map((imageName) => ({ category, artwork: [file, imageName], lng: 'es' }));
-      const pathsCategory = pathsEn.concat(pathsEs);
-      pathsArray = pathsArray.concat(pathsCategory);
+            const pathsEs = imageNamesArray.map((imageName) => ({ 
+              category, 
+              artwork: [file, imageName], 
+              lng: 'es' 
+            }));
+            
+            pathsArray.push(...pathsEn, ...pathsEs);
+          }
+        } catch (error) {
+          console.warn(`Error processing file ${file} in category ${category}:`, error);
+          // Continue with other files even if one fails
+        }
+      }
     }
+    
+    return pathsArray;
+  } catch (error) {
+    console.error('Error in generateStaticParams:', error);
+    return [];
   }
-  return pathsArray;
 }
