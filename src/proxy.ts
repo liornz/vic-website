@@ -9,7 +9,7 @@ export const config = {
   matcher: ['/((?!api|_next/static|_next/image|assets|images|articles|videos|favicon.ico|sw.js|sitemap|manifest).*)'],
 };
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   let lng;
   if (req.cookies.has(cookieName)) lng = acceptLanguage.get(req.cookies.get(cookieName)?.value);
   if (!lng) lng = acceptLanguage.get(req.headers.get('Accept-Language'));
