@@ -45,6 +45,14 @@ export default function SideDrawer(props: Props) {
     setMobileOpen(!mobileOpen);
   };
 
+  const handleDrawerClose = () => {
+    setMobileOpen(false);
+  };
+
+  React.useEffect(() => {
+    handleDrawerClose();
+  }, [pathname]);
+
   const mainIcon = (text: string) => {
     switch (text) {
       case 'Home':
@@ -70,7 +78,7 @@ export default function SideDrawer(props: Props) {
         {['Home', 'Works', 'Press', 'Contact'].map((text) => (
           <ListItem key={text} disablePadding>
             <Link href={text === 'Home' ? '/' : `/${text.toLowerCase()}`}>
-              <ListItemButton>
+              <ListItemButton onClick={handleDrawerClose}>
                 <ListItemIcon>{mainIcon(text)}</ListItemIcon>
                 <ListItemText primary={t(text.toLowerCase())} />
               </ListItemButton>
@@ -83,7 +91,7 @@ export default function SideDrawer(props: Props) {
         {categoriesData.map(({ name, slug }) => (
           <ListItem key={name} disablePadding>
             <Link href={`/works/${slug.toLowerCase()}`}>
-              <ListItemButton>
+              <ListItemButton onClick={handleDrawerClose}>
                 <ListItemIcon>
                   <ExploreIcon />
                 </ListItemIcon>
