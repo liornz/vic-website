@@ -5,3 +5,6 @@ allowBuilds:
   '@parcel/watcher': true
   sharp: true
   unrs-resolver: true
+
+overrides:
+  caniuse-lite: 1.0.30001799
