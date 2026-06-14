@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import ReactMarkdown from "react-markdown";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./artwork.module.scss";
 import { artwork } from "../../../types/types";
 import { AiOutlineLeft } from "react-icons/ai";
@@ -12,25 +12,29 @@ import { AiOutlineRight } from "react-icons/ai";
 import PreviewArtwork from "./preview-artwork";
 import { useTranslation } from '../../../app/i18n/client';
 
+type ArtworkImageProps = {
+  blurDataURL: string;
+  src: string;
+  height: number;
+  width: number;
+  type?: string | undefined;
+};
+
 interface Props {
   artwork: artwork;
   lng: string;
   category: string;
   imageName: string;
-  imageProps: {
-    blurDataURL: string;
-    src: string;
-    height: number;
-    width: number;
-    type?: string | undefined;
-  };
+  imageProps: ArtworkImageProps;
+  prevImageProps?: ArtworkImageProps;
+  nextImageProps?: ArtworkImageProps;
 }
 
 const Artwork: React.FC<Props> = (props) => {
   const { t } = useTranslation(props.lng, 'common');
   const [imagePreview, setImagePreview] = useState(false);
   const router = useRouter();
-  const { artwork, imageProps, imageName, category } = props;
+  const { artwork, imageProps, prevImageProps, nextImageProps, imageName, category } = props;
   const imagesArray = artwork.images.split("/");
   const imageNamesArray = artwork.imageNames.split("/");
   const imageIndex = imagesArray.findIndex(
@@ -63,6 +67,12 @@ const Artwork: React.FC<Props> = (props) => {
   const previousImagePath = `/works/${artwork.categorySlug}/${
     artwork.slug
   }/${previousImage(imageIndex)}`;
+
+  useEffect(() => {
+    if (imagesArray.length < 2) return;
+    router.prefetch(previousImagePath);
+    router.prefetch(nextImagePath);
+  }, [router, previousImagePath, nextImagePath, imagesArray.length]);
 
   const openPreviewHandler = () => {
     setImagePreview(true);
@@ -156,6 +166,7 @@ const Artwork: React.FC<Props> = (props) => {
               {...imageProps}
               placeholder="blur"
               alt={artwork.title}
+              sizes="90vw"
               style={{
                 objectFit: "contain",
                 objectPosition: "50% 50%",
@@ -164,6 +175,26 @@ const Artwork: React.FC<Props> = (props) => {
               }}
               priority
             />
+          </div>
+          <div className={styles.sr_preload} aria-hidden>
+            {prevImageProps ? (
+              <Image
+                {...prevImageProps}
+                alt=""
+                aria-hidden
+                loading="eager"
+                sizes="90vw"
+              />
+            ) : null}
+            {nextImageProps ? (
+              <Image
+                {...nextImageProps}
+                alt=""
+                aria-hidden
+                loading="eager"
+                sizes="90vw"
+              />
+            ) : null}
           </div>
           <Link href={nextImagePath}>
             <span

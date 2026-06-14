@@ -1,10 +1,29 @@
 import { getCategoryFileNames, getFileData, getFileNamesPerCategory } from '../../../../../utils/data-utils';
+import { getAdjacentImageIndices } from '../../../../../utils/artwork-carousel';
 import React from 'react';
 import { getPlaiceholder } from 'plaiceholder';
 import { Metadata } from 'next';
 import Artwork from '@/components/works/single-artwork-page/artwork';
+import { getImageProps } from 'next/image';
 import path from "node:path";
 import fs from "node:fs/promises";
+
+type ArtworkImageProps = {
+  blurDataURL: string;
+  src: string;
+  height: number;
+  width: number;
+  type?: string | undefined;
+};
+
+function PreloadLink({ imageProps }: { imageProps: ArtworkImageProps }) {
+  const { props } = getImageProps({
+    ...imageProps,
+    alt: '',
+    sizes: '90vw',
+  });
+  return <link rel="preload" as="image" href={props.src} />;
+}
 
 interface Props {
   params: Promise<{ lng: string; category: string; artwork: [string, string] }>;
@@ -46,7 +65,30 @@ const SingleDestinationPage: React.FC<Props> = async (props) => {
     (image) => image.replace(/\.jpg$|\.png$|\.jfif$/, '') === imageName
   );
 
-  return  <Artwork artwork={fileData} imageProps={imagePropsArray[imageIndex]} imageName={imageName} category={category} lng={lng} />;
+  const { prev: prevIndex, next: nextIndex } = getAdjacentImageIndices(
+    imageIndex,
+    imagesArray.length
+  );
+  const prevImageProps =
+    prevIndex !== null ? imagePropsArray[prevIndex] : undefined;
+  const nextImageProps =
+    nextIndex !== null ? imagePropsArray[nextIndex] : undefined;
+
+  return (
+    <>
+      {prevImageProps ? <PreloadLink imageProps={prevImageProps} /> : null}
+      {nextImageProps ? <PreloadLink imageProps={nextImageProps} /> : null}
+      <Artwork
+        artwork={fileData}
+        imageProps={imagePropsArray[imageIndex]}
+        prevImageProps={prevImageProps}
+        nextImageProps={nextImageProps}
+        imageName={imageName}
+        category={category}
+        lng={lng}
+      />
+    </>
+  );
 };
 
 export default SingleDestinationPage;
