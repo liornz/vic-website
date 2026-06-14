@@ -7,6 +7,7 @@ const withPWA = pwa({
   runtimeCaching,
   dynamicStartUrl: false,
   buildExcludes: [/middleware-manifest.json$/],
+  disable: process.env.NODE_ENV === 'development',
 });
  
 /**
