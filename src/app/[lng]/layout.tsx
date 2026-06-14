@@ -25,7 +25,6 @@ export const metadata: Metadata = {
     verification: {
         google: 'g9rOuYhxp85PFoEn6Ib1IRk6ogMouW5ZlU5tk-djwhE',
     },
-    metadataBase: new URL('https://victoralaluf.com/'),
     formatDetection: {
         telephone: false,
     },
