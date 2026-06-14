@@ -1,6 +1,9 @@
 packages:
   - '.'
 
+minimumReleaseAge: 4320
+verifyDepsBeforeRun: error
+
 allowBuilds:
   '@parcel/watcher': true
   sharp: true
